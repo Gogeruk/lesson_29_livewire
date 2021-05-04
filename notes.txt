@@ -1,0 +1,140 @@
+//////..............\\\\\\//////..............\\\\\\//////..............\\\\\\
+//////..............\\\\\\//////..............\\\\\\//////..............\\\\\\
+//////..............\\\\\\//////..............\\\\\\//////..............\\\\\\
+
+1.
+Реализовать Livewire компонент конвертера валют.
+
+EXTRA:
+Текущие курсы
+валют можно взять тут:
+https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5
+
+curl -X GET "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5" -H "Accept: application/json" -H "Content-Type: application/json"
+
+
+
+OGEY   looks like I'll have to write  an adapter for this service
+or something...
+
+
+I will usea this  instead BC it's more fun!
+
+http://www.floatrates.com/daily/usd.json
+curl -X GET "http://www.floatrates.com/daily/usd.json" -H "Accept: application/json" -H "Content-Type: application/json"
+
+
+
+
+//////////////////
+1.  Snachla vse sozdat tak est
+
+2. Write html
+
+3.
+docker-compose exec app php artisan make:livewire currencyConvert
+
+
+
+4. Custom error
+
+docker-compose exec app php artisan make:rule CurrencyCodeCheck
+
+
+
+
+OGEY  @2
+
+try TO MAKE AN ADAPTER
+AND THEN THINK ABOUT CURRENCY CODE VALIDATION
+
+
+interface for adapter:
+    must have
+        1. CURRENCY CODE
+        2. CURRENCY CODE 2
+        3. RETUR - CONVERTION RATE
+    IT WILL BE IMPLEMENTED BYY A SERVICE FOR COBVERSIOON
+    THAT WILL
+
+
+STEPS TAKEN:
+1.
+docker-compose exec app php artisan make:provider CurrencyConversionAdaterServiceProvider
+
+2.
+mkdir Service
+touch CurrencyConversionInterface.php
+touch CurrencyConversionServicFloatratese.php
+
+3.
+Refister
+
+4.
+Implement in Livewire and hope thateverytjing gors AOK!
+
+
+
+
+
+
+
+    |        |        |        |        |        |        |        |        |
+  //|\\    //|\\    //|\\    //|\\    //|\\    //|\\    //|\\    //|\\    //|\\
+ ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\
+////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\
+\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////
+ \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///
+  \\|//    \\|//    \\|//    \\|//    \\|//    \\|//    \\|//    \\|//    \\|//
+    |        |        |        |        |        |        |        |        |
+
+
+// SOS FOR LARAVEL DOCKER SET UP
+https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose
+///////////...\\\\\\\\\\\
+
+
+// START
+cd www
+docker-compose up -d
+php artisan key:generate
+
+// CONFIG DB AND MAKE A USER
+docker-compose exec db bash
+mysql -u root -p
+GRANT ALL PRIVILEGES  ON laravel.* TO 'laraveluser'@'%' IDENTIFIED BY 'secret';
+FLUSH PRIVILEGES;
+EXIT;
+exit
+
+// CHANGE .env WITH CREDS
+ALSO ADD
+TELEGRAM_API_kEY={token}
+
+// SEEDING
+docker-compose exec app bash start.bash
+
+// CONNECT TO DB
+docker exec -it db mysql -u laraveluser -p
+THEN INPUT A PASSWORD: "secret"
+
+// TO STOP
+docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+
+
+
+
+// IMPORTNT
+docker-compose exec app bash start.bash
+// IMPORTNT
+
+
+
+    |        |        |        |        |        |        |        |        |
+  //|\\    //|\\    //|\\    //|\\    //|\\    //|\\    //|\\    //|\\    //|\\
+ ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\  ///|\\\
+////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\////|\\\\
+\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////\\\\|////
+ \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///  \\\|///
+  \\|//    \\|//    \\|//    \\|//    \\|//    \\|//    \\|//    \\|//    \\|//
+    |        |        |        |        |        |        |        |        |
